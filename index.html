@@ -1,489 +1,515 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AnH | Performance & Recovery</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --navy: #0a0e1a;
-      --navy-mid: #111827;
-      --navy-card: #161d2e;
-      --accent-gold: #c9a84c;
-      --accent-teal: #2dd4bf;
-      --accent-green: #4ade80;
-      --text-main: #f0f4ff;
-      --text-sub: #8899bb;
-      --border: rgba(255,255,255,0.07);
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AnH | Performance & Recovery</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sun:      #FFF3E0;
+    --citrus:   #FF8C42;
+    --lime:     #6DBF67;
+    --sky:      #4DB6E8;
+    --mint:     #E8F8F2;
+    --fresh:    #2ECC9A;
+    --leaf:     #27AE60;
+    --warm:     #FFF8F0;
+    --text:     #2D3A2E;
+    --muted:    #7A8C7B;
+    --white:    #FFFFFF;
+    --card-shadow: 0 4px 24px rgba(45,58,46,0.08);
+  }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
-      background: var(--navy);
-      color: var(--text-main);
-      font-family: 'Noto Sans KR', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 0 0 60px;
-      overflow-x: hidden;
-    }
+  html { scroll-behavior: smooth; }
 
-    /* ── 배경 장식 ── */
-    .bg-glow {
-      position: fixed;
-      top: -200px; left: 50%;
-      transform: translateX(-50%);
-      width: 700px; height: 700px;
-      background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
-    .bg-glow2 {
-      position: fixed;
-      bottom: -100px; right: -100px;
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(45,212,191,0.06) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--warm);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-    /* ── 헤더 ── */
-    .header {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 480px;
-      padding: 52px 24px 28px;
-      text-align: center;
-    }
+  /* ── 배경 장식 ── */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -200px;
+    right: -200px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(109,191,103,0.12) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -150px;
+    left: -150px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(77,182,232,0.10) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
 
-    .logo-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
+  /* ── 래퍼 ── */
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 48px 24px 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
 
-    .logo-icon {
-      width: 48px; height: 48px;
-      background: linear-gradient(135deg, var(--accent-gold), #e8c56a);
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 22px;
-      color: var(--navy);
-      letter-spacing: 1px;
-      box-shadow: 0 4px 20px rgba(201,168,76,0.35);
-    }
+  /* ════════════════
+     HEADER
+  ════════════════ */
+  .header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
 
-    .logo-text {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 36px;
-      letter-spacing: 4px;
-      background: linear-gradient(135deg, #fff 40%, var(--accent-gold));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+  .logo-ring {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--lime) 0%, var(--fresh) 50%, var(--sky) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 18px;
+    box-shadow: 0 8px 32px rgba(109,191,103,0.35);
+    position: relative;
+  }
+  .logo-ring::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: var(--white);
+  }
+  .logo-text {
+    position: relative;
+    z-index: 1;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, var(--leaf), var(--sky));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
-    .tagline {
-      font-size: 11px;
-      letter-spacing: 3px;
-      color: var(--accent-gold);
-      text-transform: uppercase;
-      margin-bottom: 8px;
-      font-weight: 500;
-    }
+  .brand-name {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: -0.5px;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .brand-name span {
+    color: var(--leaf);
+  }
 
-    .desc {
-      font-size: 13px;
-      color: var(--text-sub);
-      line-height: 1.7;
-      font-weight: 300;
-    }
+  .tagline {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
 
-    /* ── 구분선 ── */
-    .divider {
-      width: 100%;
-      max-width: 480px;
-      padding: 0 24px;
-      margin: 4px 0 20px;
-      position: relative; z-index: 1;
-    }
-    .divider-line {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
-      opacity: 0.4;
-    }
+  /* 태그 필 */
+  .tag-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .tag {
+    background: var(--white);
+    border: 1.5px solid rgba(109,191,103,0.3);
+    color: var(--leaf);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 100px;
+    letter-spacing: 0.2px;
+  }
+  .tag.sky { border-color: rgba(77,182,232,0.3); color: var(--sky); }
+  .tag.citrus { border-color: rgba(255,140,66,0.3); color: var(--citrus); }
 
-    /* ── 섹션 라벨 ── */
-    .section-label {
-      width: 100%;
-      max-width: 480px;
-      padding: 0 24px;
-      margin: 24px 0 10px;
-      position: relative; z-index: 1;
-    }
-    .section-label span {
-      font-size: 10px;
-      letter-spacing: 3px;
-      color: var(--text-sub);
-      text-transform: uppercase;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .section-label span::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
+  /* ════════════════
+     SECTION LABEL
+  ════════════════ */
+  .section-label {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 32px 0 14px;
+  }
+  .section-label span {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, rgba(109,191,103,0.3), transparent);
+  }
 
-    /* ── 카드 컨테이너 ── */
-    .cards {
-      width: 100%;
-      max-width: 480px;
-      padding: 0 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      position: relative; z-index: 1;
-    }
+  /* ════════════════
+     SERVICE CARDS
+  ════════════════ */
+  .cards {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
 
-    /* ── 카드 기본 ── */
-    .card {
-      background: var(--navy-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 18px 20px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      text-decoration: none;
-      color: var(--text-main);
-      cursor: pointer;
-      transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
-      position: relative;
-      overflow: hidden;
-    }
+  .card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: var(--white);
+    border-radius: 20px;
+    padding: 20px 22px;
+    text-decoration: none;
+    color: var(--text);
+    box-shadow: var(--card-shadow);
+    border: 1.5px solid transparent;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px;
+    height: 100%;
+    border-radius: 4px 0 0 4px;
+  }
+  .card.green::before { background: linear-gradient(to bottom, var(--lime), var(--fresh)); }
+  .card.blue::before  { background: linear-gradient(to bottom, var(--sky), #2196F3); }
 
-    .card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 36px rgba(45,58,46,0.13);
+  }
+  .card.green:hover { border-color: rgba(109,191,103,0.25); }
+  .card.blue:hover  { border-color: rgba(77,182,232,0.25); }
 
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-    }
+  .card-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+  .card.green .card-icon { background: linear-gradient(135deg, #E8F8F2, #D0F0E0); }
+  .card.blue  .card-icon { background: linear-gradient(135deg, #E8F4FD, #D0EBFA); }
 
-    /* ── 카드 아이콘 ── */
-    .card-icon {
-      width: 46px; height: 46px;
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 22px;
-      flex-shrink: 0;
-    }
+  .card-body {
+    flex: 1;
+    min-width: 0;
+  }
+  .card-title {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    margin-bottom: 4px;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .card-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    white-space: normal;
+  }
 
-    /* ── 카드 텍스트 ── */
-    .card-body { flex: 1; min-width: 0; }
-    .card-title {
-      font-size: 15px;
-      font-weight: 700;
-      margin-bottom: 3px;
-      letter-spacing: -0.2px;
-    }
-    .card-sub {
-      font-size: 12px;
-      color: var(--text-sub);
-      font-weight: 300;
-      line-height: 1.5;
-    }
+  .card-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 100px;
+    flex-shrink: 0;
+  }
+  .card.green .card-badge { background: #E8F8F2; color: var(--leaf); }
+  .card.blue  .card-badge { background: #E8F4FD; color: var(--sky); }
 
-    /* ── 화살표 ── */
-    .card-arrow {
-      font-size: 16px;
-      color: var(--text-sub);
-      flex-shrink: 0;
-      transition: transform 0.2s ease, color 0.2s ease;
-    }
-    .card:hover .card-arrow {
-      transform: translateX(3px);
-    }
+  /* ════════════════
+     SNS GRID
+  ════════════════ */
+  .sns-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    align-items: stretch;
+  }
+  .sns-grid .sns-btn {
+    width: 100%;
+  }
 
-    /* ── 배지 ── */
-    .badge {
-      font-size: 10px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 20px;
-      letter-spacing: 1px;
-      margin-left: 8px;
-      vertical-align: middle;
-    }
-    .badge-new {
-      background: rgba(74,222,128,0.15);
-      color: var(--accent-green);
-      border: 1px solid rgba(74,222,128,0.3);
-    }
-    .badge-open {
-      background: rgba(201,168,76,0.15);
-      color: var(--accent-gold);
-      border: 1px solid rgba(201,168,76,0.3);
-    }
+  .sns-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--white);
+    border-radius: 16px;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: var(--text);
+    box-shadow: var(--card-shadow);
+    border: 1.5px solid transparent;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    min-height: 72px;
+    height: 72px;
+  }
+  .sns-btn:hover {
+    transform: translateY(-2px);
+    border-color: rgba(109,191,103,0.2);
+  }
 
-    /* ── 색상별 스타일 ── */
+  .sns-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .sns-icon.insta  { background: linear-gradient(135deg, #FDE8F0, #FCE0EC); }
+  .sns-icon.yt     { background: linear-gradient(135deg, #FDE8E8, #FDD8D8); }
+  .sns-icon.kakao  { background: linear-gradient(135deg, #FFF8D0, #FFF0C0); }
+  .sns-icon.naver  { background: linear-gradient(135deg, #E0F4E8, #D0ECD8); }
 
-    /* AnH SPORTS 카드 (골드) */
-    .card-sports { border-color: rgba(201,168,76,0.2); }
-    .card-sports::before { background: linear-gradient(135deg, rgba(201,168,76,0.05), transparent); }
-    .card-sports:hover { border-color: rgba(201,168,76,0.5); box-shadow: 0 8px 32px rgba(201,168,76,0.12); }
-    .card-sports:hover::before { opacity: 1; }
-    .card-sports:hover .card-arrow { color: var(--accent-gold); }
-    .icon-sports { background: rgba(201,168,76,0.12); }
+  .sns-body {}
+  .sns-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+    display: block;
+    line-height: 1.3;
+  }
+  .sns-handle {
+    font-size: 11px;
+    color: var(--muted);
+  }
 
-    /* AnH Foods 카드 (그린) */
-    .card-foods { border-color: rgba(74,222,128,0.15); }
-    .card-foods::before { background: linear-gradient(135deg, rgba(74,222,128,0.05), transparent); }
-    .card-foods:hover { border-color: rgba(74,222,128,0.45); box-shadow: 0 8px 32px rgba(74,222,128,0.10); }
-    .card-foods:hover::before { opacity: 1; }
-    .card-foods:hover .card-arrow { color: var(--accent-green); }
-    .icon-foods { background: rgba(74,222,128,0.12); }
+  /* ════════════════
+     CTA — 상담
+  ════════════════ */
+  .cta-card {
+    width: 100%;
+    background: linear-gradient(135deg, var(--leaf) 0%, var(--fresh) 60%, var(--sky) 100%);
+    border-radius: 24px;
+    padding: 28px 26px;
+    text-align: center;
+    margin-top: 6px;
+    box-shadow: 0 8px 32px rgba(39,174,96,0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-card::before {
+    content: '✦';
+    position: absolute;
+    top: -12px; right: 20px;
+    font-size: 80px;
+    color: rgba(255,255,255,0.06);
+    line-height: 1;
+  }
 
-    /* EOS 교육 (틸) */
-    .card-edu { border-color: rgba(45,212,191,0.15); }
-    .card-edu::before { background: linear-gradient(135deg, rgba(45,212,191,0.05), transparent); }
-    .card-edu:hover { border-color: rgba(45,212,191,0.45); box-shadow: 0 8px 32px rgba(45,212,191,0.10); }
-    .card-edu:hover::before { opacity: 1; }
-    .card-edu:hover .card-arrow { color: var(--accent-teal); }
-    .icon-edu { background: rgba(45,212,191,0.12); }
+  .cta-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .cta-title {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--white);
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+  .cta-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.82);
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  .cta-btn {
+    display: inline-block;
+    background: var(--white);
+    color: var(--leaf);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    padding: 13px 32px;
+    border-radius: 100px;
+    text-decoration: none;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    letter-spacing: -0.2px;
+  }
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  }
 
-    /* SNS (퍼플/회색) */
-    .card-sns { border-color: rgba(255,255,255,0.07); }
-    .card-sns:hover { border-color: rgba(255,255,255,0.18); box-shadow: 0 8px 32px rgba(255,255,255,0.04); }
-    .icon-sns { background: rgba(255,255,255,0.07); }
+  /* ════════════════
+     FOOTER
+  ════════════════ */
+  .footer {
+    margin-top: 40px;
+    text-align: center;
+  }
+  .footer-logo {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .footer-copy {
+    font-size: 11px;
+    color: rgba(122,140,123,0.6);
+  }
 
-    /* ── SNS 가로 그리드 ── */
-    .sns-grid {
-      width: 100%;
-      max-width: 480px;
-      padding: 0 24px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      position: relative; z-index: 1;
-    }
-
-    .sns-card {
-      background: var(--navy-card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px 16px;
-      text-decoration: none;
-      color: var(--text-main);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-    }
-    .sns-card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(255,255,255,0.18);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-    }
-    .sns-card-icon {
-      width: 36px; height: 36px;
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-    .sns-card-text .sns-name { font-size: 13px; font-weight: 700; }
-    .sns-card-text .sns-handle { font-size: 11px; color: var(--text-sub); font-weight: 300; }
-
-    /* Instagram */
-    .sns-insta .sns-card-icon { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
-    .sns-insta:hover { border-color: rgba(220,39,67,0.4); }
-
-    /* YouTube */
-    .sns-youtube .sns-card-icon { background: rgba(255,0,0,0.15); color: #ff4444; border: 1px solid rgba(255,0,0,0.2); }
-    .sns-youtube:hover { border-color: rgba(255,0,0,0.4); }
-
-    /* KakaoTalk */
-    .sns-kakao .sns-card-icon { background: rgba(254,229,0,0.15); font-size: 16px; border: 1px solid rgba(254,229,0,0.2); }
-    .sns-kakao:hover { border-color: rgba(254,229,0,0.4); }
-
-    /* Naver Blog */
-    .sns-naver .sns-card-icon { background: rgba(3,199,90,0.15); color: #03c75a; border: 1px solid rgba(3,199,90,0.2); font-size: 14px; font-weight: 900; }
-    .sns-naver:hover { border-color: rgba(3,199,90,0.4); }
-
-    /* ── 상담 CTA 버튼 ── */
-    .cta-wrap {
-      width: 100%;
-      max-width: 480px;
-      padding: 0 24px;
-      position: relative; z-index: 1;
-    }
-    .cta-btn {
-      display: block;
-      width: 100%;
-      padding: 18px;
-      background: linear-gradient(135deg, var(--accent-gold), #e8c56a);
-      color: var(--navy);
-      font-family: 'Noto Sans KR', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-align: center;
-      text-decoration: none;
-      border-radius: 16px;
-      border: none;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
-      box-shadow: 0 4px 24px rgba(201,168,76,0.3);
-    }
-    .cta-btn:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.08);
-      box-shadow: 0 8px 32px rgba(201,168,76,0.45);
-    }
-    .cta-sub {
-      text-align: center;
-      font-size: 11px;
-      color: var(--text-sub);
-      margin-top: 8px;
-      font-weight: 300;
-    }
-
-    /* ── 푸터 ── */
-    .footer {
-      position: relative; z-index: 1;
-      margin-top: 32px;
-      text-align: center;
-      font-size: 11px;
-      color: var(--text-sub);
-      letter-spacing: 1px;
-      opacity: 0.6;
-    }
-
-    /* ── 애니메이션 ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .header   { animation: fadeUp 0.6s ease both; }
-    .divider  { animation: fadeUp 0.6s 0.1s ease both; }
-    .section-label:nth-of-type(1) { animation: fadeUp 0.5s 0.15s ease both; }
-    .cards .card:nth-child(1) { animation: fadeUp 0.5s 0.2s ease both; }
-    .cards .card:nth-child(2) { animation: fadeUp 0.5s 0.28s ease both; }
-    .cards .card:nth-child(3) { animation: fadeUp 0.5s 0.36s ease both; }
-    .sns-grid { animation: fadeUp 0.5s 0.44s ease both; }
-    .cta-wrap { animation: fadeUp 0.5s 0.52s ease both; }
-  </style>
+  /* ── 모바일 ── */
+  @media (max-width: 400px) {
+    .wrap { padding: 36px 16px 48px; }
+    .sns-grid { grid-template-columns: 1fr 1fr; }
+    .brand-name { font-size: 24px; }
+  }
+</style>
 </head>
 <body>
+<div class="wrap">
 
-  <div class="bg-glow"></div>
-  <div class="bg-glow2"></div>
-
-  <!-- 헤더 -->
+  <!-- HEADER -->
   <header class="header">
-    <div class="logo-wrap">
-      <div class="logo-icon">AnH</div>
-      <div class="logo-text">AnH SPORTS</div>
+    <div class="logo-ring">
+      <span class="logo-text">AnH</span>
     </div>
-    <div class="tagline">Performance is a Science · Recovery is a Strategy</div>
-    <div class="desc">골프 퍼포먼스 컨디셔닝 센터 · 스포츠 리커버리 푸드<br>데이터 기반 · 과학적 훈련 · 용인</div>
+    <h1 class="brand-name">AnH <span>SPORTS</span></h1>
+    <p class="tagline">
+      골프 퍼포먼스 컨디셔닝 센터 · 스포츠 리커버리 푸드<br>
+      데이터 기반 · 과학적 훈련 · 용인
+    </p>
+    <div class="tag-row">
+      <span class="tag">🏌️ Golf Performance</span>
+      <span class="tag sky">🔬 Sports Science</span>
+      <span class="tag citrus">🌿 Recovery Foods</span>
+    </div>
   </header>
 
-  <!-- 구분선 -->
-  <div class="divider"><div class="divider-line"></div></div>
-
-  <!-- 섹션: 서비스 -->
-  <div class="section-label"><span>서비스 바로가기</span></div>
-
+  <!-- 서비스 -->
+  <div class="section-label"><span>서비스</span></div>
   <div class="cards">
-
-    <!-- AnH SPORTS -->
-    <a href="https://anhsports.notion.site/AnH-SPORTS-e9ecc07b60088206805e81cd37120457?pvs=143" target="_blank" class="card card-sports">
-      <div class="card-icon icon-sports">🏌️</div>
+    <a href="https://anhsports.notion.site/AnH-SPORTS-e9ecc07b60088206805e81cd37120457?pvs=143" class="card green" target="_blank">
+      <div class="card-icon">🏌️</div>
       <div class="card-body">
         <div class="card-title">AnH SPORTS 퍼포먼스 센터</div>
-        <div class="card-sub">골프 특화 체력 훈련 · TPI 기반 평가 · 프로·아마추어</div>
+        <div class="card-desc">골프 특화 체력 훈련 · TPI 기반 평가<br>프로·아마추어 모두 환영</div>
       </div>
-      <div class="card-arrow">→</div>
+      <span class="card-badge">바로가기 →</span>
     </a>
 
-    <!-- AnH Recovery Foods -->
-    <a href="https://anhfood.cafe24.com" target="_blank" class="card card-foods">
-      <div class="card-icon icon-foods">🌿</div>
+    <a href="https://anhfood.cafe24.com" class="card blue" target="_blank">
+      <div class="card-icon">🌿</div>
       <div class="card-body">
-        <div class="card-title">AnH Recovery Foods <span class="badge badge-new">NEW</span></div>
-        <div class="card-sub">스포츠 과학 기반 산지직송 식품 · 회복 영양 큐레이션</div>
+        <div class="card-title">AnH Recovery Foods</div>
+        <div class="card-desc">스포츠 과학 기반 산지직송 식품<br>회복 영양 큐레이션</div>
       </div>
-      <div class="card-arrow">→</div>
+      <span class="card-badge">NEW ✦</span>
     </a>
-
   </div>
 
-  <!-- 섹션: SNS -->
-  <div class="section-label" style="margin-top:28px;"><span>채널 / SNS</span></div>
-
+  <!-- SNS -->
+  <div class="section-label"><span>채널 / SNS</span></div>
   <div class="sns-grid">
-    <a href="https://www.instagram.com/anhsports_official" target="_blank" class="sns-card sns-insta">
-      <div class="sns-card-icon">📷</div>
-      <div class="sns-card-text">
-        <div class="sns-name">Instagram</div>
-        <div class="sns-handle">@anhsports_official</div>
+    <a href="https://www.instagram.com/anhsports_official" class="sns-btn" target="_blank">
+      <div class="sns-icon insta">📷</div>
+      <div class="sns-body">
+        <span class="sns-name">Instagram</span>
+        <span class="sns-handle">@anhsports_official</span>
       </div>
     </a>
-    <a href="https://www.youtube.com/@agslgolf" target="_blank" class="sns-card sns-youtube">
-      <div class="sns-card-icon">▶</div>
-      <div class="sns-card-text">
-        <div class="sns-name">YouTube</div>
-        <div class="sns-handle">@agslgolf</div>
+    <a href="https://www.youtube.com/@agslgolf" class="sns-btn" target="_blank">
+      <div class="sns-icon yt">▶</div>
+      <div class="sns-body">
+        <span class="sns-name">YouTube</span>
+        <span class="sns-handle">@agslgolf</span>
       </div>
     </a>
-    <a href="https://open.kakao.com/o/seQbS56b" target="_blank" class="sns-card sns-kakao">
-      <div class="sns-card-icon">💬</div>
-      <div class="sns-card-text">
-        <div class="sns-name">카카오 오픈채팅</div>
-        <div class="sns-handle">상담 · 문의</div>
+    <a href="https://open.kakao.com/o/seQbS56b" class="sns-btn" target="_blank">
+      <div class="sns-icon kakao">💬</div>
+      <div class="sns-body">
+        <span class="sns-name">카카오 오픈채팅</span>
+        <span class="sns-handle">상담 · 문의</span>
       </div>
     </a>
-    <a href="https://blog.naver.com/hongdaewon" target="_blank" class="sns-card sns-naver">
-      <div class="sns-card-icon" style="color:#03c75a; font-family:'Bebas Neue',sans-serif; font-size:18px;">N</div>
-      <div class="sns-card-text">
-        <div class="sns-name">네이버 블로그</div>
-        <div class="sns-handle">운동 & 퍼포먼스</div>
+    <a href="https://blog.naver.com/hongdaewon" class="sns-btn" target="_blank">
+      <div class="sns-icon naver">N</div>
+      <div class="sns-body">
+        <span class="sns-name">네이버 블로그</span>
+        <span class="sns-handle">운동 & 퍼포먼스</span>
       </div>
     </a>
   </div>
 
-  <!-- 상담 CTA -->
-  <div class="section-label" style="margin-top:28px;"><span>무료 상담</span></div>
-  <div class="cta-wrap">
-    <a href="tel:01088798421" class="cta-btn">📞 퍼포먼스 상담 신청 · 010-8879-8421</a>
-    <div class="cta-sub">전화 / 카카오톡 상담 가능 · 첫 평가 무료</div>
+  <!-- CTA -->
+  <div class="section-label"><span>무료 상담</span></div>
+  <div class="cta-card">
+    <p class="cta-eyebrow">First Evaluation FREE</p>
+    <h2 class="cta-title">첫 퍼포먼스 평가<br>무료로 받아보세요</h2>
+    <p class="cta-sub">전화 · 카카오톡 상담 가능<br>010-8879-8421</p>
+    <a href="tel:01088798421" class="cta-btn">📞 지금 상담 신청</a>
   </div>
 
-  <!-- 푸터 -->
-  <div class="footer">
-    © 2026 AnH SPORTS · 안성맞춤 스포츠 퍼포먼스 센터 · 용인
-  </div>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-logo">AnH SPORTS</div>
+    <div class="footer-copy">© 2026 안성맞춤 스포츠 퍼포먼스 센터 · 용인</div>
+  </footer>
 
+</div>
 </body>
 </html>
