@@ -316,17 +316,27 @@
   .sns-icon.kakao  { background: linear-gradient(135deg, #FFF8D0, #FFF0C0); }
   .sns-icon.naver  { background: linear-gradient(135deg, #E0F4E8, #D0ECD8); }
 
-  .sns-body {}
+  .sns-body {
+    min-width: 0;
+    overflow: hidden;
+  }
   .sns-name {
     font-size: 12px;
     font-weight: 700;
     color: var(--text);
     display: block;
     line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .sns-handle {
     font-size: 11px;
     color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
   }
 
   /* ════════════════
@@ -489,7 +499,7 @@
     <a href="https://blog.naver.com/hongdaewon" class="sns-btn" target="_blank">
       <div class="sns-icon naver">N</div>
       <div class="sns-body">
-        <span class="sns-name">네이버 블로그</span>
+        <span class="sns-name">블로그</span>
         <span class="sns-handle">운동 & 퍼포먼스</span>
       </div>
     </a>
